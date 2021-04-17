@@ -1,0 +1,29 @@
+@font-face {
+  font-family:GlobalFont;
+  src: url("./assets/fonts/HindMadurai-Regular.ttf");
+}
+
+@font-face {
+  font-family:GlobalFont-bold;
+  src: url("./assets/fonts/HindMadurai-Bold.ttf");
+  font-weight: bold;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: GlobalFont, serif;
+}
+
+p {
+  display: block;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
