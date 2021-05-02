@@ -1,13 +1,15 @@
 import React from "react"
 import { SignupForm, SignupFormValues } from "../forms"
 import { useSelector, useDispatch } from "react-redux"
-import { authSelector } from "../../store"
-import { signUpUser } from "../../store"
+import { authSelector, signUp } from "../../store"
 
-export const SignUp = () => {
-    const {email,password} = useSelector(authSelector)
+interface SignupProps {
+    changeToLogin: () => void
+}
+
+export const SignUp = ({ changeToLogin }: SignupProps) => {
+    const { error } = useSelector(authSelector)
     const dispatch = useDispatch()
-    console.log("redux state signup", email, password)
     const initalValues: SignupFormValues = {
         email: "",
         password: "",
@@ -17,8 +19,12 @@ export const SignUp = () => {
     return (
         <SignupForm
             initialValues={initalValues}
+            serverError={error}
             onSubmit={(values) => {
-                dispatch(signUpUser(values))
+                dispatch(signUp({
+                    values,
+                    callback: changeToLogin
+                }))
             }}
         />
     )

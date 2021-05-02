@@ -2,9 +2,13 @@ import React from "react"
 import { LogoImage, LogoWrapper } from "./logo.styles"
 import LogoImg from "../../assets/images/logo.png"
 
-export const Logo = () => {
+interface LogoProps {
+    small?: boolean
+}
+
+export const Logo = ({ small }: LogoProps) => {
     return (
-        <LogoWrapper>
+        <LogoWrapper small={small}>
             <LogoImage src={LogoImg} />
         </LogoWrapper>
     )

@@ -1,5 +1,11 @@
+export interface AuthData {
+    authToken: string
+    refreshToken: string
+    expires: number
+}
+
 export interface AuthState {
     loading: boolean
-    email: string
-    password: string
+    error: string
+    authData: AuthData
 }

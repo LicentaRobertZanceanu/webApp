@@ -5,13 +5,17 @@ import { ButtonText, ButtonWrapper } from "./button.styles"
 export const Button = ({
     type,
     onClick,
-    text
+    text,
+    fullWidth,
+    marginTopAuto
 }
-    :ButtonProps) => {
-    return(
+    : ButtonProps) => {
+    return (
         <ButtonWrapper
             type={type}
             onClick={onClick}
+            fullWidth={fullWidth}
+            marginTopAuto={marginTopAuto}
         >
             <ButtonText>
                 {text}

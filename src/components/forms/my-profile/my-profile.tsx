@@ -1,68 +1,61 @@
-import React from "react"
+import React from 'react'
 import { Formik, Field } from "formik"
 import { FormWrapper } from "../../../styles/styles.app"
 import { CustomInput } from "../custom-fields"
 import * as Yup from "yup"
-import { Button } from "../.."
-import { SignupFormProps } from "./signup.props"
-import { Banner } from "../../banner/banner"
+import { Banner, Button } from "../.."
+import { MyProfileFormProps } from './my-profile.props'
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required(),
-    password: Yup.string().required(),
     firstName: Yup.string().required(),
-    lastName: Yup.string().required()
+    password: Yup.string().required()
 })
 
-export const SignupForm = ({
+export const MyProfileForm = ({
     initialValues,
     onSubmit,
     serverError
-}: SignupFormProps) => {
+}: MyProfileFormProps) => {
     return (
         <Formik
-            initialValues={initialValues}
             enableReinitialize={true}
+            initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
         >
             {({ handleSubmit }) => {
                 return (
-                    <FormWrapper onSubmit={handleSubmit}>
-                        <Field
-                            name={"firstName"}
-                            labelText={"First Name"}
-                            component={CustomInput}
-                        />
-                        <Field
-                            name={"lastName"}
-                            labelText={"Last Name"}
-                            component={CustomInput}
-                        />
+                    <FormWrapper onSubmit={handleSubmit} fullHeight>
                         <Field
                             name={"email"}
                             labelText={"Email"}
                             component={CustomInput}
                         />
                         <Field
-                            name={"password"}
-                            labelText={"Password"}
+                            name={"firstName"}
+                            labelText={"First name"}
                             component={CustomInput}
-                            type={"password"}
                         />
-                        <Button
-                            type={"submit"}
-                            text={"Create account"}
-                            fullWidth
+                        <Field
+                            name={"lastName"}
+                            labelText={"Last name"}
+                            component={CustomInput}
                         />
                         <Banner
                             type={'error'}
                             message={serverError}
                             show={!!serverError}
                         />
+                        <Button
+                            type={"submit"}
+                            text={"Change information"}
+                            marginTopAuto
+                        />
                     </FormWrapper>
                 )
             }}
         </Formik>
+
     )
 }

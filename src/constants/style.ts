@@ -4,13 +4,14 @@ export const borderRadius = {
     round: "50%"
 }
 
-export const boxShadow = {
-
+export const fontSizes = {
+    small: "12px",
+    normal: "14px",
+    big: "16px",
+    bigger: "18px",
+    biggest: '24px'
 }
 
-export const fontSizes = {
-    small:"12px",
-    normal:"14px",
-    big:"16px",
-    bigger:"18px"
+export const metrics = {
+    horizontalPadding: '5%'
 }

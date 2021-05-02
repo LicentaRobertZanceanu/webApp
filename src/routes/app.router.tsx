@@ -1,21 +1,43 @@
-import React, { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { Route, Switch } from 'react-router-dom'
-import { AuthPage, HomePage } from "../pages"
-import { AUTH_ROUTE, HOME_ROUTE } from "./clientRoutes"
+import { AuthPage } from "../pages"
+import { appRoutes, authRoutes } from "./clientRoutes"
+import { useSelector } from 'react-redux'
+import { authSelector } from "../store"
+import { PrivateRouter } from './private.router'
+import { PrivateRoute } from "../components"
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-export const AppRouter = () => {
+interface AppRouterFCProps extends RouteComponentProps { }
+
+const AppRouterFC = ({ history }: AppRouterFCProps) => {
+    const { authData } = useSelector(authSelector)
+    useEffect(() => {
+        if (!!authData.authToken) {
+            const isApphRoute = !!Object.values(appRoutes).find(route => route === history.location.pathname)
+            if (!isApphRoute) {
+                history.push('/')
+            }
+        }
+    }, [history.location.pathname, authData.authToken])
+
     return (
-        <Suspense fallback={<div />}>
+        <Suspense fallback={<h1 >Loading</h1>}>
             <Switch>
                 <Route
                     component={AuthPage}
-                    path={AUTH_ROUTE}
+                    path={authRoutes.auth}
+                    exact={true}
                 />
-                <Route
-                    component={HomePage}
-                    path={HOME_ROUTE}
+                <PrivateRoute
+                    component={PrivateRouter}
+                    path={appRoutes.home}
+                    exact={false}
                 />
+
             </Switch>
         </Suspense>
     )
 }
+
+export const AppRouter = withRouter(AppRouterFC)

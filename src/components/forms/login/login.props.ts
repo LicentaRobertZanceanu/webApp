@@ -6,4 +6,5 @@ export type LoginFormValues = {
 export type LoginFormProps = {
     initialValues: LoginFormValues
     onSubmit: (values: LoginFormValues) => void
+    serverError: string
 }
