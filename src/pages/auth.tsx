@@ -5,7 +5,7 @@ import Illustration from "../assets/images/auth-illustration.svg"
 import Login from "../components/login/login"
 
 export const AuthPage = () => {
-    const [selectedTab, setSelectedTab] = useState<string>("signup")
+    const [selectedTab, setSelectedTab] = useState<string>("login")
 
     const tabs: RoundTabsElement[] = [{
         id: "signup",
@@ -37,7 +37,9 @@ export const AuthPage = () => {
                     selectedTab === "login" ?
                         <Login />
                         :
-                        <SignUp />
+                        <SignUp 
+                            changeToLogin={() => setSelectedTab('login')}
+                        />
                 }
             </AuthContentHalfWrapper>
         </AuthWrapper>

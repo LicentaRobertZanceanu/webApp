@@ -1,13 +1,14 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { authSelector } from "../../store"
-import { loginUser } from "../../store"
+import { authSelector, login } from "../../store"
 import { LoginForm, LoginFormValues } from "../forms"
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-const Login = () => {
-    const { email, password } = useSelector(authSelector)
+interface LoginProps extends RouteComponentProps { }
+
+const Login = ({ history }: LoginProps) => {
+    const { error } = useSelector(authSelector)
     const dispatch = useDispatch()
-    console.log("redux state", email, password)
 
     const loginFormInitialValues: LoginFormValues = {
         email: "",
@@ -19,12 +20,15 @@ const Login = () => {
                 initialValues={loginFormInitialValues}
                 onSubmit={(values) => {
                     dispatch(
-                        loginUser(values)
+                        login({
+                            values,
+                        })
                     )
                 }}
+                serverError={error}
             />
         </div>
     )
 }
 
-export default Login
+export default withRouter(Login)

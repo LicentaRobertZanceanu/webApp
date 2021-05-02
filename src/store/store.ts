@@ -4,8 +4,9 @@ import { useDispatch } from 'react-redux'
 import { ThunkAction } from 'redux-thunk'
 import logger from 'redux-logger';
 import { IRootStore } from '../types';
+import { isAuthenticated } from './isAuthenticated-middleware';
 
-const middleware = [...getDefaultMiddleware(), logger];
+const middleware = [...getDefaultMiddleware(), logger, isAuthenticated];
 
 export const store = configureStore({
     reducer: rootReducer,

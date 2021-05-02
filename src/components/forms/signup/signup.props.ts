@@ -8,4 +8,5 @@ export type SignupFormValues = {
 export type SignupFormProps = {
     initialValues: SignupFormValues
     onSubmit: (values: SignupFormValues) => void
+    serverError: string
 }

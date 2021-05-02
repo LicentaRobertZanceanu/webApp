@@ -4,7 +4,7 @@ import { LoginFormProps } from "./login.props"
 import { FormWrapper } from "../../../styles/styles.app"
 import { CustomInput } from "../custom-fields"
 import * as Yup from "yup"
-import { Button } from "../.."
+import { Banner, Button } from "../.."
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required(),
@@ -13,7 +13,8 @@ const validationSchema = Yup.object().shape({
 
 export const LoginForm = ({
     initialValues,
-    onSubmit
+    onSubmit,
+    serverError
 }: LoginFormProps) => {
     return (
         <Formik
@@ -39,6 +40,12 @@ export const LoginForm = ({
                         <Button
                             type={"submit"}
                             text={"Authenticate"}
+                            fullWidth
+                        />
+                        <Banner
+                            type={'error'}
+                            message={serverError}
+                            show={!!serverError}
                         />
                     </FormWrapper>
                 )

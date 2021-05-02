@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { FieldError, FieldLabel, FieldWrapper, StyledInput } from "./custom-fields.styles"
 import { FieldProps } from "formik"
 

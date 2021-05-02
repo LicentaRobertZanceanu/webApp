@@ -1,5 +1,9 @@
-// export const AUTH_ROUTE = "/auth"
-export const AUTH_ROUTE = "/"
+export const appRoutes = {
+    home: '/',
+    profile: '/profile'
 
-// export const HOME_ROUTE = "/"
-export const HOME_ROUTE = "/home"
+}
+
+export const authRoutes = {
+    auth: '/auth'
+}

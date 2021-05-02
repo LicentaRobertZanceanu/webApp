@@ -3,7 +3,6 @@ import { colors } from "../../constants/colors"
 import { fontSizes } from "../../constants/style"
 
 export const ButtonWrapper = styled.button`
-    width:100%;
     height:auto;
     padding:12px 20px;
     display:flex;
@@ -13,9 +12,14 @@ export const ButtonWrapper = styled.button`
     border:0;
     border-radius:10px;
     background:${colors.primary};
+    width:fit-content;
     margin:0;
     cursor:pointer;
-`
+    ${({ fullWidth, marginTopAuto }: { fullWidth?: boolean, marginTopAuto?: boolean }) => `
+        ${fullWidth ? `width:100%;` : ''}
+        ${marginTopAuto ? 'margin-top:auto' : ''}
+    `}
+    `
 
 export const ButtonText = styled.p`
     font-size:${fontSizes.normal};
