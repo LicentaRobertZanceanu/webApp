@@ -38,6 +38,7 @@ export const PageWrapper = styled.div`
     max-height:100vh;
     overflow-x:auto;
     padding:50px ${metrics.horizontalPadding} 30px ${metrics.horizontalPadding};
+
 `
 
 export const PageContentWrapper = styled.div`
@@ -85,6 +86,11 @@ export const PageSeeMore = styled.h2`
     font-size:${fontSizes.small};
     color:${colors.darkGray};
     margin-left:auto;
+    cursor:pointer;
+    :hover {
+        border-bottom:1px solid ${colors.primary};
+        color:${colors.primary};
+    }
 `
 
 export const BigWrapper = styled.div`

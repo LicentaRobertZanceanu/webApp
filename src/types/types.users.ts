@@ -11,6 +11,13 @@ export interface UsersState {
     error: string
 }
 
+export interface PaginationElements {
+    page: number
+    total: number
+    pageSize: number
+    numberOfPages: number
+}
+
 export interface Artist {
     _id: string
     name: string
@@ -39,12 +46,14 @@ export interface SongsState {
     song: Song | {}
     loading: boolean
     error: string
+    pagination: PaginationElements
 }
 
 export interface ArtistsState {
     artists: Artist[]
     loading: boolean
     error: string
+    pagination: PaginationElements
 }
 
 export interface GenresState {

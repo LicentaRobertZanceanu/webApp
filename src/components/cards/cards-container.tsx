@@ -6,9 +6,10 @@ import { ContainerWrapper } from './styles'
 interface Props {
     elements: CardProps[]
     type: 'songs' | 'listing'
+    fixedHeight?: boolean
 }
 
-const CardsContainer: FC<Props> = ({ elements, type }) => {
+const CardsContainer: FC<Props> = ({ elements, type, fixedHeight }) => {
     if (type === 'songs') {
         return (
             <ContainerWrapper>
@@ -25,9 +26,8 @@ const CardsContainer: FC<Props> = ({ elements, type }) => {
             </ContainerWrapper>
         )
     } else {
-        console.log('a nmtrat')
         return (
-            <ContainerWrapper>
+            <ContainerWrapper fixedHeight={!!fixedHeight}>
                 {
                     elements.map((element) => {
                         return (

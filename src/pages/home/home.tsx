@@ -1,12 +1,15 @@
-import React, { useEffect } from "react"
+import React, { useEffect, FC } from "react"
 import { getSongs, getArtists, getGenres, songsSelector, artistsSelector, genresSelector } from "../../store"
 import { useSelector, useDispatch } from "react-redux"
 import { FlexWrapper, PageContentWrapper, PageSeeMore, PageTitle, PageTopWrapper, PageWrapper } from "../../styles/styles.app"
 import { CardsContainer, CardProps } from "../../components"
 import { getArtistIllustration } from '../../assets/images'
 import Genres from '../../assets/images/genres.webp'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-export const HomePage = () => {
+interface Props extends RouteComponentProps { }
+
+const HomePageFC: FC<Props> = ({ history }) => {
     const dispatch = useDispatch()
     const { songs } = useSelector(songsSelector)
     const { artists } = useSelector(artistsSelector)
@@ -39,7 +42,6 @@ export const HomePage = () => {
         id: artist._id,
         title: artist.name,
         image: getArtistIllustration(`artist-${index + 1}`),
-        // image: '',
         link: '/'
     }))
 
@@ -55,7 +57,11 @@ export const HomePage = () => {
             <PageContentWrapper card>
                 <PageTopWrapper>
                     <PageTitle>Songs</PageTitle>
-                    <PageSeeMore>See more</PageSeeMore>
+                    <PageSeeMore
+                        onClick={() => history.push('/songs')}
+                    >
+                        See more
+                    </PageSeeMore>
                 </PageTopWrapper>
                 <CardsContainer
                     elements={songsAsCardElements}
@@ -67,7 +73,7 @@ export const HomePage = () => {
                 <PageContentWrapper card smallContainer>
                     <PageTopWrapper>
                         <PageTitle>Aritsts</PageTitle>
-                        <PageSeeMore>See more</PageSeeMore>
+                        <PageSeeMore onClick={() => history.push('/artists')}>See more</PageSeeMore>
                     </PageTopWrapper>
                     <CardsContainer
                         elements={artistsAsCardElements}
@@ -89,3 +95,5 @@ export const HomePage = () => {
         </PageWrapper>
     )
 }
+
+export const HomePage = withRouter(HomePageFC)
