@@ -8,7 +8,7 @@ export const usersReducer = {
 
 export const getLoggedInUserData = createAsyncThunk(
     'users/loggedInUser-Request',
-    async (_, { rejectWithValue }) => {
+    async (_) => {
         try {
             const response = await apiFetch({
                 api: 'users',
@@ -17,14 +17,14 @@ export const getLoggedInUserData = createAsyncThunk(
             })
             return response
         } catch (error) {
-            return rejectWithValue(error)
+            return error
         }
     }
 )
 
 export const updateUserInformation = createAsyncThunk(
     'users/updateUserInformation-Request',
-    async ({ values }: { values: MyProfileFormValues }, { rejectWithValue }) => {
+    async ({ values }: { values: MyProfileFormValues }) => {
         try {
             const response = await apiFetch({
                 api: 'users',
@@ -34,7 +34,7 @@ export const updateUserInformation = createAsyncThunk(
             })
             return response
         } catch (error) {
-            return rejectWithValue(error)
+            return error
         }
     }
 )

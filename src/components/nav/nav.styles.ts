@@ -3,7 +3,7 @@ import { colors } from '../../constants/colors'
 import { fontSizes } from '../../constants/style'
 
 export const Wrapper = styled.div`
-    height:100%;
+    height:100vh;
     width:14vw;
     background:${colors.white};
     box-shadow: 0px -1px 20px -4px rgba(130,136,149,0.4);

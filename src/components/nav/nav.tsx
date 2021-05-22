@@ -39,7 +39,11 @@ const NavFC = ({ history, match }: NavProps) => {
     const activePage = getActivePage()
     return (
         <Wrapper>
-            <div style={{ paddingLeft: '30px', height: '80px', width: '100%' }}>
+            <div style={{
+                paddingLeft: '30px',
+                height: '80px',
+                width: '100%'
+            }}>
                 <Logo small />
             </div>
             <Category>Menu</Category>

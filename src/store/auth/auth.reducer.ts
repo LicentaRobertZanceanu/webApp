@@ -36,7 +36,7 @@ export const signUp = createAsyncThunk(
     }: {
         values: SignupFormValues
         callback: () => void
-    }, { rejectWithValue }) => {
+    }) => {
         try {
             const response = await apiFetch({
                 api: 'auth',
@@ -47,7 +47,7 @@ export const signUp = createAsyncThunk(
             callback()
             return response
         } catch (error) {
-            return rejectWithValue(error)
+            return error
         }
     }
 )
@@ -56,7 +56,7 @@ export const login = createAsyncThunk(
     'auth/login',
     async ({ values }: {
         values: LoginFormValues
-    }, { rejectWithValue }) => {
+    }) => {
         try {
             const response = await apiFetch({
                 api: 'auth',
@@ -66,7 +66,7 @@ export const login = createAsyncThunk(
             })
             return response
         } catch (error) {
-            return rejectWithValue(error)
+            return error
         }
     }
 )
@@ -79,7 +79,7 @@ export const refreshToken = createAsyncThunk(
                 refreshToken: string,
                 authToken: string
             }
-        }, { rejectWithValue }) => {
+        }) => {
         try {
             const response = await apiFetch({
                 api: 'auth',
@@ -89,7 +89,7 @@ export const refreshToken = createAsyncThunk(
             })
             return response
         } catch (error) {
-            rejectWithValue(error)
+            return error
         }
     }
 )
