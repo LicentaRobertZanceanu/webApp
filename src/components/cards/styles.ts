@@ -9,9 +9,21 @@ export const ContainerWrapper = styled.div`
     align-items:center;
     flex-wrap:wrap;
     padding:${ContentPadding};
-    ${({ listing }: { listing?: boolean }) => listing && `
+    ${({ listing, fixedHeight }: { listing?: boolean, fixedHeight?: boolean }) => `
+    ${listing ? `
         border-bottom:1px solid ${colors.lightGray};
-        padding:10px 0;
+        padding:10px 5px;
+        :hover {
+            background-color:rgba(${colors.primaryRGBA},0.1);
+        }
+    `: ''}
+    ${fixedHeight ?
+            ` 
+        max-height:80%;
+        overflow-x:auto;
+      `: ''
+        }
+    
     `}
 `
 
@@ -94,4 +106,25 @@ export const ListingCardImage = styled.img`
     width:100%;
     height:100%;
     border-radius:10px;
+`
+export const SongsListingContainer = styled.div`
+    flex:1;
+    display:flex;
+    align-items:center;
+`
+
+export const SongsListingTextWrapper = styled.div`
+    width:auto;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+`
+
+export const InfiniteScrollWrapper = styled.div`
+    padding:${ContentPadding};
+    max-height:80%;
+    overflow-x:auto;
+    .infinite-scroll-component__outerdiv {
+        width:100%!important;
+    }
 `

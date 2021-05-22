@@ -17,6 +17,7 @@ export interface CardProps {
     link: string
     image: string | undefined
     subTitle?: string
+    isSongsListing?: true
 }
 
 const SongCard: FC<CardProps> = ({

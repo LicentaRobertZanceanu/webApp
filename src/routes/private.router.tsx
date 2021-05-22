@@ -6,6 +6,9 @@ import { Nav, PrivateRoute } from "../components"
 import { useDispatch } from 'react-redux'
 import { getLoggedInUserData } from '../store'
 import { ContentWrapper, PagesWrapper } from '../styles/styles.app'
+import SongsRouter from './songs.router'
+import ArtistsRouter from './artists.router'
+import GenresRouter from './genres.router'
 
 export const PrivateRouter = () => {
     const dispatch = useDispatch()
@@ -26,6 +29,21 @@ export const PrivateRouter = () => {
                         component={ProfilePage}
                         path={appRoutes.profile}
                         exact={true}
+                    />
+                    <PrivateRoute
+                        component={SongsRouter}
+                        path={appRoutes.songs}
+                        exact={false}
+                    />
+                    <PrivateRoute
+                        component={ArtistsRouter}
+                        path={appRoutes.artists}
+                        exact={false}
+                    />
+                    <PrivateRoute
+                        component={GenresRouter}
+                        path={appRoutes.genres}
+                        exact={false}
                     />
                 </Switch>
             </ContentWrapper>

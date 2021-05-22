@@ -27,6 +27,9 @@ const NavFC = ({ history, match }: NavProps) => {
             case '/artists': {
                 return 'artists'
             }
+            case '/genres': {
+                return 'genres'
+            }
             case '/profile': {
                 return 'profile'
             }
@@ -54,13 +57,26 @@ const NavFC = ({ history, match }: NavProps) => {
                 <Icon name={'home'} iconPrefix={'fas'} />
                 <Link>Home</Link>
             </LinkWrapper>
-            <LinkWrapper isActive={activePage === 'songs'}>
+            <LinkWrapper
+                isActive={activePage === 'songs'}
+                onClick={() => history.push('/songs')}
+            >
                 <Icon name={'compact-disc'} iconPrefix={'fas'} />
-                <Link>Albums</Link>
+                <Link>Songs</Link>
             </LinkWrapper>
-            <LinkWrapper isActive={activePage === 'artists'}>
+            <LinkWrapper
+                isActive={activePage === 'artists'}
+                onClick={() => history.push('/artists')}
+            >
                 <Icon name={'user'} iconPrefix={'fas'} />
                 <Link>Artists</Link>
+            </LinkWrapper>
+            <LinkWrapper
+                isActive={activePage === 'genres'}
+                onClick={() => history.push('/genres')}
+            >
+                <Icon name={'guitar'} iconPrefix={'fas'} />
+                <Link>Genres</Link>
             </LinkWrapper>
 
             <Category>Library</Category>

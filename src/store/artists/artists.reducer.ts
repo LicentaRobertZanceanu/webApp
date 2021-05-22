@@ -1,8 +1,19 @@
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { apiFetch } from "../../utils"
 import queryString from 'query-string'
+import { ArtistsState } from "../../types"
 
-export const artistsReducer = {}
+export const artistsReducer = {
+    resetArtistsToInitialState: (state: ArtistsState, { payload }: PayloadAction<{}>) => {
+        state.artists = []
+        state.pagination = {
+            page: 1,
+            total: 0,
+            pageSize: 0,
+            numberOfPages: 0
+        }
+    }
+}
 
 type artistsQueryParams = {
     page: number
