@@ -1,6 +1,6 @@
 import React from 'react'
 import { MyProfileForm } from '../components/forms/my-profile/my-profile'
-import { BigWrapper, PageContentWrapper, PageTitle, PageWrapper } from '../styles/styles.app'
+import { BigWrapper, PageContentWrapper, PageTitle, PageTopWrapper, PageWrapper } from '../styles/styles.app'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUserInformation, usersSelector } from '../store'
 import { MyProfileFormValues } from '../components/forms/my-profile/my-profile.props'
@@ -15,7 +15,9 @@ export const ProfilePage = () => {
     return (
         <PageWrapper>
             <PageContentWrapper>
-                <PageTitle>My profile</PageTitle>
+                <PageTopWrapper>
+                    <PageTitle>My profile</PageTitle>
+                </PageTopWrapper>
                 <BigWrapper>
                     <MyProfileForm
                         initialValues={{

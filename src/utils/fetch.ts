@@ -3,7 +3,7 @@ import { AuthData } from "../types"
 import { loadAuthDataFromStorage } from "./auth"
 
 interface apiFetchProps {
-    api: 'auth' | 'users'
+    api: 'auth' | 'users' | 'music'
     endpoint: string
     method: 'get' | 'put' | 'post' | 'delete'
     body?: any
@@ -18,6 +18,10 @@ const getApiUrl = (api: string): string => {
         }
         case 'users': {
             url = 'https://smartmusicapi-users.herokuapp.com/users'
+            break
+        }
+        case 'music': {
+            url = 'https://smartmusicapi-music.herokuapp.com'
             break
         }
         default: {
@@ -74,7 +78,9 @@ export const apiFetch = async ({
     }
 
     const apiUrl = getApiUrl(api)
-
+    console.log(
+        '4243242424', `${apiUrl}${endpoint}`
+    )
     return new Promise(async (resolve, reject) => {
         await fetch(`${apiUrl}${endpoint}`, init)
             .then(async (response) => {
