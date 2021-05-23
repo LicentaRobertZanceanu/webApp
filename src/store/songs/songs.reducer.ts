@@ -15,17 +15,25 @@ export const songsReducer = {
     }
 }
 
-type songsQueryParams = {
+export interface SongsQueryParams {
     page: number
     limit: number
     genreId?: string
     artistId?: string
 }
 
+interface songsByArtistsIdQueryParams extends SongsQueryParams {
+    artistId: string
+}
+
+interface SongsByGenreIdQueryParams extends SongsQueryParams {
+    genreId: string
+}
+
 const getSongsApi = async ({
     queryParams
 }: {
-    queryParams: songsQueryParams
+    queryParams: SongsQueryParams
 }) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -47,7 +55,7 @@ export const getSongs = createAsyncThunk(
     'songs/getSongs',
     async ({
         queryParams
-    }: { queryParams: songsQueryParams }
+    }: { queryParams: SongsQueryParams }
     ) => {
         try {
             const response = await getSongsApi({ queryParams })
@@ -58,11 +66,27 @@ export const getSongs = createAsyncThunk(
     }
 )
 
-export const getSongsForInfiniteScroll = createAsyncThunk(
-    'songs/getSongsForInfiniteScroll',
+export const getSongsByArtistId = createAsyncThunk(
+    'songs/getSongsByArtistId',
     async ({
         queryParams
-    }: { queryParams: songsQueryParams }) => {
+    }: { queryParams: songsByArtistsIdQueryParams }
+    ) => {
+        try {
+            const response = await getSongsApi({ queryParams })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const getSongsByGenreId = createAsyncThunk(
+    'songs/getSongsByGenreId',
+    async ({
+        queryParams
+    }: { queryParams: SongsByGenreIdQueryParams }
+    ) => {
         try {
             const response = await getSongsApi({ queryParams })
             return response

@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react"
-import { getSongs, getArtists, getGenres, songsSelector, artistsSelector, genresSelector } from "../../store"
+import { getSongs, getArtists, getGenres, songsSelector, artistsSelector, genresSelector, resetArtistsToInitialState, resetSongsToInitialState } from "../../store"
 import { useSelector, useDispatch } from "react-redux"
 import { FlexWrapper, PageContentWrapper, PageSeeMore, PageTitle, PageTopWrapper, PageWrapper } from "../../styles/styles.app"
 import { CardsContainer, CardProps } from "../../components"
@@ -9,7 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 interface Props extends RouteComponentProps { }
 
-const HomePageFC: FC<Props> = ({ history }) => {
+const HomePage: FC<Props> = ({ history }) => {
     const dispatch = useDispatch()
     const { songs } = useSelector(songsSelector)
     const { artists } = useSelector(artistsSelector)
@@ -29,6 +29,13 @@ const HomePageFC: FC<Props> = ({ history }) => {
             }
         }))
         dispatch(getGenres())
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetArtistsToInitialState({}))
+            dispatch(resetSongsToInitialState({}))
+        }
     }, [])
 
     const songsAsCardElements: CardProps[] = songs && songs.map((song) => ({
@@ -96,4 +103,4 @@ const HomePageFC: FC<Props> = ({ history }) => {
     )
 }
 
-export const HomePage = withRouter(HomePageFC)
+export default withRouter(HomePage)

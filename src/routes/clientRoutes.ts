@@ -1,5 +1,7 @@
 export const songsRoutes = {
-    songs: '/songs'
+    songs: '/songs',
+    songsByArtists: '/songs/artists/:artistId',
+    songsByGenres: '/songs/genres/:genreId'
 }
 
 export const artistsRoutes = {
@@ -16,6 +18,11 @@ export const appRoutes = {
     ...songsRoutes,
     ...artistsRoutes,
     ...genresRoutes
+}
+
+export const nestedRoutes = {
+    songsByArtists: appRoutes.songsByArtists,
+    songsByGenres: appRoutes.songsByGenres
 }
 
 export const authRoutes = {

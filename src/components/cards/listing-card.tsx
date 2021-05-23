@@ -4,6 +4,7 @@ import { colors } from '../../constants/colors'
 import { CardProps } from './song-card'
 import { CardSubtitle, CardTitle, ContainerWrapper, ListingCardImage, ListingCardImageContainer, SongsListingContainer, SongsListingTextWrapper } from './styles'
 import Song from '../../assets/images/song.webp'
+import { useHistory } from 'react-router-dom'
 
 const IconStyle: CSSProperties = {
     cursor: 'pointer'
@@ -14,7 +15,16 @@ const IconStyleWithMarginLeft: CSSProperties = {
     marginLeft: '10px'
 }
 
-const ListingCard: FC<CardProps> = ({ id, title, link, image, subTitle, isSongsListing }) => {
+const ListingCard: FC<CardProps> = ({
+    id,
+    image,
+    isSongsListing,
+    link,
+    subTitle,
+    title,
+}) => {
+    const history = useHistory()
+
     const renderListingForSongs = () => {
         return (
             <SongsListingContainer>
@@ -51,7 +61,13 @@ const ListingCard: FC<CardProps> = ({ id, title, link, image, subTitle, isSongsL
     }
 
     return (
-        <ContainerWrapper listing>
+        <ContainerWrapper
+            listing
+            onClick={() => {
+                console.log('link', link)
+                history.push(link)
+            }}
+        >
             <ListingCardImageContainer>
                 <ListingCardImage src={image || Song} />
             </ListingCardImageContainer>

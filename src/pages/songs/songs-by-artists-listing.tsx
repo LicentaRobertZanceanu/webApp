@@ -1,34 +1,41 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { CardProps, InfiniteScrollCard, RenderSongs } from '../../components'
-import { artistsSelector, getArtistById, getSongs, resetSongsToInitialState, SongsQueryParams, songsSelector } from '../../store'
-import { PageContentWrapper, PageSubtitle, PageTitle, PageTopWrapper, PageWrapper } from '../../styles/styles.app'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { CardProps, RenderSongs } from '../../components'
+import { artistsSelector, getArtistById, getSongs, getSongsByArtistId, resetSongsToInitialState, songsSelector } from '../../store'
 
-interface Props extends RouteComponentProps {
+type MatchParams = {
+    artistId: string
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
 
 }
 
-const SongsListing: FC<Props> = ({ history, match }) => {
+const SongsListing: FC<Props> = ({ match, history }) => {
     const dispatch = useDispatch()
     const { songs, pagination } = useSelector(songsSelector)
+    const { artist } = useSelector(artistsSelector)
+
     const [songsAsCardElements, setSongsAsCardElements] = useState<CardProps[]>([])
 
     useEffect(() => {
-        const queryParams: SongsQueryParams = {
-            page: pagination.page,
-            limit: 20
-        }
-
-        dispatch(getSongs({ queryParams }))
+        dispatch(getArtistById({
+            artistId: match.params.artistId
+        }))
+        dispatch(getSongsByArtistId({
+            queryParams: {
+                page: pagination.page,
+                limit: 20,
+                artistId: match.params.artistId
+            }
+        }))
     }, [])
-
     useEffect(() => {
         return () => {
             dispatch(resetSongsToInitialState({}))
         }
     }, [])
-
     useEffect(() => {
         const newSongs: CardProps[] = songs.map((song) => ({
             id: song._id,
@@ -42,16 +49,20 @@ const SongsListing: FC<Props> = ({ history, match }) => {
     }, [songs])
 
     const fetchSongs = () => {
-        const queryParams: SongsQueryParams = {
-            page: pagination.page + 1,
-            limit: 20
-        }
-
-        dispatch(getSongs({ queryParams }))
+        dispatch(getSongsByArtistId({
+            queryParams: {
+                page: pagination.page + 1,
+                limit: pagination.pageSize,
+                artistId: match.params.artistId
+            }
+        }))
     }
+
     return (
         <RenderSongs
             elements={songsAsCardElements}
+            filteredSongs
+            filterName={artist.name}
             fetchData={fetchSongs}
             hasMore={pagination.page < pagination.numberOfPages}
             history={history}

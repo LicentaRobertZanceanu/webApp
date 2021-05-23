@@ -5,11 +5,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateUserInformation, usersSelector } from '../store'
 import { MyProfileFormValues } from '../components/forms/my-profile/my-profile.props'
 
-export const ProfilePage = () => {
+const ProfilePage = () => {
     const { loggedInUser } = useSelector(usersSelector)
     const dispatch = useDispatch()
     const submitForm = (values: MyProfileFormValues) => {
-        console.log('CLICKED')
         dispatch(updateUserInformation({ values }))
     }
     return (
@@ -32,3 +31,5 @@ export const ProfilePage = () => {
         </PageWrapper>
     )
 }
+
+export default ProfilePage

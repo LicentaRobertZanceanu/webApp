@@ -39,3 +39,23 @@ export const getArtists = createAsyncThunk(
         }
     }
 )
+
+export const getArtistById = createAsyncThunk(
+    'artists/getArtistById',
+    async ({
+        artistId
+    }: {
+        artistId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'get',
+                endpoint: `/artists/${artistId}`
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)

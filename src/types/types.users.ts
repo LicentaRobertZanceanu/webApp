@@ -51,6 +51,7 @@ export interface SongsState {
 
 export interface ArtistsState {
     artists: Artist[]
+    artist: Artist
     loading: boolean
     error: string
     pagination: PaginationElements
@@ -58,6 +59,7 @@ export interface ArtistsState {
 
 export interface GenresState {
     genres: Genre[]
+    genre: Genre
     loading: boolean
     error: string
 }
