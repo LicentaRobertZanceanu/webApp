@@ -39,6 +39,7 @@ export interface Song {
     image: string
     artist: Artist
     genre: Genre
+    liked: boolean
 }
 
 export interface SongsState {

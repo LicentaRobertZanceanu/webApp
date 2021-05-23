@@ -19,6 +19,7 @@ const ListingCard: FC<CardProps> = ({
     id,
     image,
     isSongsListing,
+    likeSong,
     link,
     subTitle,
     title,
@@ -26,6 +27,12 @@ const ListingCard: FC<CardProps> = ({
     const history = useHistory()
 
     const renderListingForSongs = () => {
+        let likeIconColor = colors.gray
+        if (likeSong) {
+            if (likeSong.liked) {
+                likeIconColor = colors.primary
+            }
+        }
         return (
             <SongsListingContainer>
                 <SongsListingTextWrapper>
@@ -37,8 +44,14 @@ const ListingCard: FC<CardProps> = ({
                         iconPrefix={'fas'}
                         name={'thumbs-up'}
                         size={'sm'}
-                        color={colors.gray}
+                        color={likeIconColor}
                         style={IconStyle}
+                        onClick={() => {
+                            if (likeSong) {
+                                const likeStatus = likeSong.onClick()
+                                likeSong.liked = likeStatus
+                            }
+                        }}
                     />
                     <Icon
                         iconPrefix={'fas'}
@@ -64,8 +77,9 @@ const ListingCard: FC<CardProps> = ({
         <ContainerWrapper
             listing
             onClick={() => {
-                console.log('link', link)
-                history.push(link)
+                if (!isSongsListing) {
+                    history.push(link)
+                }
             }}
         >
             <ListingCardImageContainer>

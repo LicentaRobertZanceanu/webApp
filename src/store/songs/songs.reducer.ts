@@ -95,3 +95,45 @@ export const getSongsByGenreId = createAsyncThunk(
         }
     }
 )
+
+export const likeSong = createAsyncThunk(
+    'songs/likeSong',
+    async ({
+        songId
+    }: {
+        songId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'post',
+                endpoint: `/likes/${songId}`
+            })
+
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const dislikeSong = createAsyncThunk(
+    'songs/dislikeSong',
+    async ({
+        songId
+    }: {
+        songId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'delete',
+                endpoint: `/likes/${songId}`
+            })
+
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)

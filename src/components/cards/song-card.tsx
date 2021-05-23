@@ -11,13 +11,20 @@ import {
     PlayButtonWrapper
 } from './styles'
 
+export interface LikeSongProps {
+    liked: boolean
+    onClick: () => boolean
+}
+
 export interface CardProps {
     id: string
     title: string
+    likeSong?: LikeSongProps
     link: string
     image: string | undefined
     subTitle?: string
     isSongsListing?: true
+
 }
 
 const SongCard: FC<CardProps> = ({
