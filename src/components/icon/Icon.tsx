@@ -9,15 +9,17 @@ interface IconProps {
     size?: SizeProp
     iconPrefix: IconPrefix
     style?: CSSProperties
+    onClick?: () => void
 }
 
-export const Icon = ({ name, color, size, iconPrefix, style }: IconProps) => {
+export const Icon = ({ name, color, size, iconPrefix, style, onClick }: IconProps) => {
     return (
         <FontAwesomeIcon
             icon={[iconPrefix, name]}
             color={color || colors.gray}
             size={size || '1x'}
             style={style}
+            onClick={onClick}
         />
     )
 }

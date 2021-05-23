@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardProps, RenderSongs } from '../../components'
-import { artistsSelector, getArtistById, getSongs, getSongsByArtistId, resetSongsToInitialState, songsSelector } from '../../store'
+import { artistsSelector, dislikeSong, getArtistById, getSongs, getSongsByArtistId, likeSong, resetSongsToInitialState, songsSelector } from '../../store'
 
 type MatchParams = {
     artistId: string
@@ -43,7 +43,23 @@ const SongsListing: FC<Props> = ({ match, history }) => {
             link: '/',
             image: song.image,
             subTitle: song.artist.name,
-            isSongsListing: true
+            isSongsListing: true,
+            likeSong: {
+                liked: song.liked,
+                onClick: () => {
+                    if (song.liked) {
+                        dispatch(dislikeSong({
+                            songId: song._id
+                        }))
+                        return false
+                    } else {
+                        dispatch(likeSong({
+                            songId: song._id
+                        }))
+                        return true
+                    }
+                }
+            }
         }))
         setSongsAsCardElements([...songsAsCardElements, ...newSongs])
     }, [songs])

@@ -17,20 +17,21 @@ const NavFC = ({ history, match }: NavProps) => {
     }
 
     const getActivePage = (): string => {
-        switch (history.location.pathname) {
-            case '/': {
+        const routes = history.location.pathname.split('/')
+        switch (routes[1]) {
+            case '': {
                 return 'home'
             }
-            case '/songs': {
+            case 'songs': {
                 return 'songs'
             }
-            case '/artists': {
+            case 'artists': {
                 return 'artists'
             }
-            case '/genres': {
+            case 'genres': {
                 return 'genres'
             }
-            case '/profile': {
+            case 'profile': {
                 return 'profile'
             }
             default: {

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getSongs, getSongsByArtistId, songsReducer } from '.'
 import { IRootStore, SongsState } from '../../types'
-import { getSongsByGenreId } from './songs.reducer'
+import { dislikeSong, getSongsByGenreId, likeSong } from './songs.reducer'
 
 const initialState: SongsState = {
     loading: false,
@@ -99,6 +99,26 @@ export const songsSlice = createSlice({
             state.loading = true
             state.error = ''
         },
+        [likeSong.fulfilled.type]: (state) => {
+            state.loading = false
+        },
+        [likeSong.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload.message
+        },
+        [likeSong.pending.type]: (state) => {
+            state.loading = true
+        },
+        [dislikeSong.fulfilled.type]: (state) => {
+            state.loading = false
+        },
+        [dislikeSong.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload.message
+        },
+        [dislikeSong.pending.type]: (state) => {
+            state.loading = true
+        }
     }
 })
 
