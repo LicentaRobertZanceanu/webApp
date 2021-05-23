@@ -18,3 +18,23 @@ export const getGenres = createAsyncThunk(
         }
     }
 )
+
+export const getGenreById = createAsyncThunk(
+    'genres/getGenreById',
+    async ({
+        genreId
+    }: {
+        genreId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'get',
+                endpoint: `/genres/${genreId}`
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)

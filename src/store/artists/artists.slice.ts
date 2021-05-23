@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { artistsReducer, getArtists } from '.'
 import { IRootStore, ArtistsState } from '../../types'
+import { getArtistById } from './artists.reducer'
 
 const initialState: ArtistsState = {
     artists: [],
+    artist: {
+        _id: '',
+        name: '',
+        lastFmId: ''
+    },
     loading: false,
     error: '',
     pagination: {
@@ -42,6 +48,18 @@ export const artistsSlice = createSlice({
             }
         },
         [getArtists.pending.type]: (state) => {
+            state.loading = true
+            state.error = ''
+        },
+        [getArtistById.fulfilled.type]: (state, { payload }) => {
+            state.loading = false
+            state.artist = payload
+        },
+        [getArtistById.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload.message
+        },
+        [getArtistById.pending.type]: (state) => {
             state.loading = true
             state.error = ''
         }

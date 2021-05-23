@@ -79,7 +79,18 @@ export const PageTitle = styled.h1`
     color:${colors.primary};
     font-weight:bold;
     letter-spacing:1.2px;
-    ${({ card }: { card?: boolean }) => card && `font-size:${fontSizes.normal}`}
+    ${({ card, breadCrumb }: { card?: boolean, breadCrumb?: boolean }) => `
+    ${card ? `font-size:${fontSizes.normal}` : ''}
+    ${breadCrumb ? `cursor:pointer` : ''}
+    `
+    }
+`
+
+export const PageSubtitle = styled.h2`
+    font-size:${fontSizes.bigger};
+    color:${colors.darkGray};
+    letter-spacing:1.1px;
+    margin-left:10px;
 `
 
 export const PageSeeMore = styled.h2`

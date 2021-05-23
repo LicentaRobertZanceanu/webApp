@@ -17,7 +17,7 @@ const GenresListing = () => {
         id: genre._id,
         title: genre.name,
         image: Genres,
-        link: '/'
+        link: `/songs/genres/${genre._id}`
     }))
     return (
         <PageWrapper>

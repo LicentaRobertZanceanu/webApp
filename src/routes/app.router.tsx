@@ -10,14 +10,19 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 interface AppRouterFCProps extends RouteComponentProps { }
 
-const AppRouterFC = ({ history }: AppRouterFCProps) => {
+const AppRouterFC = ({ history, match }: AppRouterFCProps) => {
     const { authData } = useSelector(authSelector)
+    console.log('gaghag', match, history)
     useEffect(() => {
+        let redirectToHome = false
         if (!!authData.authToken) {
-            const isApphRoute = !!Object.values(appRoutes).find(route => route === history.location.pathname)
-            if (!isApphRoute) {
-                history.push('/')
+            if (history.location.pathname === authRoutes.auth) {
+                redirectToHome = true
             }
+        }
+
+        if (redirectToHome) {
+            history.push('/')
         }
     }, [history.location.pathname, authData.authToken])
 

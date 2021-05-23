@@ -32,7 +32,7 @@ const ArtistsListing = () => {
         const newArtists: CardProps[] = artists.map((artist, index) => ({
             id: artist._id,
             title: artist.name,
-            link: '/',
+            link: `/songs/artists/${artist._id}`,
             image: getArtistIllustration(`artist-${(index + 1) % 5}`),
         }))
         setArtistsAsCardElements([...artistsAsCardElements, ...newArtists])

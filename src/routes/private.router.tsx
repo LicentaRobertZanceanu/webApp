@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
-import { Switch } from 'react-router-dom'
-import { HomePage, ProfilePage } from "../pages"
-import { appRoutes } from "./clientRoutes"
+import React, { useEffect, lazy } from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { appRoutes, songsRoutes } from "./clientRoutes"
 import { Nav, PrivateRoute } from "../components"
 import { useDispatch } from 'react-redux'
 import { getLoggedInUserData } from '../store'
 import { ContentWrapper, PagesWrapper } from '../styles/styles.app'
-import SongsRouter from './songs.router'
-import ArtistsRouter from './artists.router'
-import GenresRouter from './genres.router'
+
+const SongsRouter = lazy(() => import('./songs.router'))
+const ArtistsRouter = lazy(() => import('./artists.router'))
+const GenresRouter = lazy(() => import('./genres.router'))
+const HomePage = lazy(() => import('../pages/home/home'))
+const ProfilePage = lazy(() => import('../pages/profile'))
 
 export const PrivateRouter = () => {
     const dispatch = useDispatch()
@@ -21,18 +23,13 @@ export const PrivateRouter = () => {
             <ContentWrapper>
                 <Switch>
                     <PrivateRoute
-                        component={HomePage}
-                        path={appRoutes.home}
-                        exact={true}
+                        component={SongsRouter}
+                        path={songsRoutes.songs}
+                        exact={false}
                     />
                     <PrivateRoute
                         component={ProfilePage}
                         path={appRoutes.profile}
-                        exact={true}
-                    />
-                    <PrivateRoute
-                        component={SongsRouter}
-                        path={appRoutes.songs}
                         exact={false}
                     />
                     <PrivateRoute
@@ -43,6 +40,11 @@ export const PrivateRouter = () => {
                     <PrivateRoute
                         component={GenresRouter}
                         path={appRoutes.genres}
+                        exact={false}
+                    />
+                    <PrivateRoute
+                        component={HomePage}
+                        path={appRoutes.home}
                         exact={false}
                     />
                 </Switch>
