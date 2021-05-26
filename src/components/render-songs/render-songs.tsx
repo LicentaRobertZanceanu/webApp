@@ -12,6 +12,7 @@ interface Props {
     fetchData: () => void
     hasMore: boolean
     history: History
+    pageTitle?: string
 }
 
 const RenderSongs: FC<Props> = ({
@@ -20,7 +21,8 @@ const RenderSongs: FC<Props> = ({
     filterName,
     fetchData,
     hasMore,
-    history
+    history,
+    pageTitle
 }) => {
     return (
         <PageWrapper>
@@ -30,8 +32,8 @@ const RenderSongs: FC<Props> = ({
                         breadCrumb
                         onClick={() => history.push('/songs')}
                     >
-                        Songs
-                </PageTitle>
+                        {pageTitle ? pageTitle : 'Songs'}
+                    </PageTitle>
                     {
                         filteredSongs &&
                         <>

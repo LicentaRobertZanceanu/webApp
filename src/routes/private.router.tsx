@@ -11,6 +11,9 @@ const ArtistsRouter = lazy(() => import('./artists.router'))
 const GenresRouter = lazy(() => import('./genres.router'))
 const HomePage = lazy(() => import('../pages/home/home'))
 const ProfilePage = lazy(() => import('../pages/profile'))
+const FavouritesSongsPage = lazy(() => import('../pages/favourites/favourites'))
+const PlaylistsPage = lazy(() => import('../pages/playlists/playlists'))
+const PlaylistSongsListing = lazy(() => import('../pages/playlists/playlist-songs-listing'))
 
 export const PrivateRouter = () => {
     const dispatch = useDispatch()
@@ -41,6 +44,21 @@ export const PrivateRouter = () => {
                         component={GenresRouter}
                         path={appRoutes.genres}
                         exact={false}
+                    />
+                    <PrivateRoute
+                        component={FavouritesSongsPage}
+                        path={appRoutes.favourites}
+                        exact={true}
+                    />
+                    <PrivateRoute
+                        component={PlaylistSongsListing}
+                        path={appRoutes.songsFromPlaylist}
+                        exact={true}
+                    />
+                    <PrivateRoute
+                        component={PlaylistsPage}
+                        path={appRoutes.playlists}
+                        exact={true}
                     />
                     <PrivateRoute
                         component={HomePage}

@@ -29,7 +29,13 @@ export const FormWrapper = styled.form`
     height:auto;
     display:flex;
     flex-direction:column;
-    ${({ fullHeight }: { fullHeight?: boolean }) => fullHeight && `height:100%;`}
+    ${({ fullHeight, oveflowStyles }: { fullHeight?: boolean, oveflowStyles?: boolean }) => `
+        ${fullHeight ? `height:100%;` : ''}
+        ${oveflowStyles ? `
+            height:70%;
+            overflow:hidden;
+        `: ''}
+    `}
 `
 
 export const PageWrapper = styled.div`
@@ -114,4 +120,7 @@ export const FlexWrapper = styled.div`
     display:flex;
     align-items:center;
     width:100%;
+    ${({ marginBottom }: { marginBottom?: string }) => marginBottom && `
+        margin-bottom:${marginBottom};
+    `}
 `

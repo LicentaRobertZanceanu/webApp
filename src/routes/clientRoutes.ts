@@ -15,6 +15,9 @@ export const genresRoutes = {
 export const appRoutes = {
     home: '/',
     profile: '/profile',
+    favourites: '/favourites',
+    playlists: '/playlists',
+    songsFromPlaylist: '/playlists/:playlistId',
     ...songsRoutes,
     ...artistsRoutes,
     ...genresRoutes

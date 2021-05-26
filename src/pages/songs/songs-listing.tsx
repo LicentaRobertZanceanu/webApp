@@ -32,7 +32,6 @@ const SongsListing: FC<Props> = ({ history, match }) => {
         const newSongs: CardProps[] = songs.map((song) => ({
             id: song._id,
             title: song.name,
-            link: '/',
             image: song.image,
             subTitle: song.artist.name,
             isSongsListing: true,

@@ -49,14 +49,14 @@ const HomePage: FC<Props> = ({ history }) => {
         id: artist._id,
         title: artist.name,
         image: getArtistIllustration(`artist-${index + 1}`),
-        link: '/'
+        link: `/songs/artists/${artist._id}`
     }))
 
     const genresAsCardElements: CardProps[] = genres.map((genre) => ({
         id: genre._id,
         title: genre.name,
         image: Genres,
-        link: '/'
+        link: `/songs/genres/${genre._id}`
     }))
 
     return (
@@ -90,7 +90,7 @@ const HomePage: FC<Props> = ({ history }) => {
                 <PageContentWrapper card smallContainer marginLeftAuto>
                     <PageTopWrapper>
                         <PageTitle>Genres</PageTitle>
-                        <PageSeeMore>See more</PageSeeMore>
+                        <PageSeeMore onClick={() => history.push('/genres')}>See more</PageSeeMore>
                     </PageTopWrapper>
                     <CardsContainer
                         elements={genresAsCardElements.slice(0, 5)}

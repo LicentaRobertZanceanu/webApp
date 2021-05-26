@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
     align-items:flex-start;
     padding:20px 0px;
     max-width:230px;
+    position:relative;
 `
 
 export const Category = styled.h4`
