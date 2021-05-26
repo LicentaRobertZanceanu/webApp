@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Category, Link, LinkWrapper, Wrapper } from './nav.styles'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Logo } from '..'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPlaylists, logout, playlistsSelector } from '../../store'
 import { Icon } from '../icon/Icon'
+import { appRoutes } from '../../routes'
+import { AddPlaylist } from '../playlists'
 
 interface NavProps extends RouteComponentProps { }
 
 const NavFC = ({ history, match }: NavProps) => {
+    const { playlists } = useSelector(playlistsSelector)
+    console.log('playlists', playlists)
+    const [showModal, setShowModal] = useState<boolean>(false)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getPlaylists())
+    }, [])
 
     const onLogout = () => {
         dispatch(logout())
@@ -34,6 +43,9 @@ const NavFC = ({ history, match }: NavProps) => {
             case 'profile': {
                 return 'profile'
             }
+            case 'favourites': {
+                return 'favourites'
+            }
             default: {
                 return ''
             }
@@ -52,7 +64,7 @@ const NavFC = ({ history, match }: NavProps) => {
             </div>
             <Category>Menu</Category>
             <LinkWrapper
-                onClick={() => history.push('/')}
+                onClick={() => history.push(appRoutes.home)}
                 isActive={activePage === 'home'}
             >
                 <Icon name={'home'} iconPrefix={'fas'} />
@@ -60,21 +72,21 @@ const NavFC = ({ history, match }: NavProps) => {
             </LinkWrapper>
             <LinkWrapper
                 isActive={activePage === 'songs'}
-                onClick={() => history.push('/songs')}
+                onClick={() => history.push(appRoutes.songs)}
             >
                 <Icon name={'compact-disc'} iconPrefix={'fas'} />
                 <Link>Songs</Link>
             </LinkWrapper>
             <LinkWrapper
                 isActive={activePage === 'artists'}
-                onClick={() => history.push('/artists')}
+                onClick={() => history.push(appRoutes.artists)}
             >
                 <Icon name={'user'} iconPrefix={'fas'} />
                 <Link>Artists</Link>
             </LinkWrapper>
             <LinkWrapper
                 isActive={activePage === 'genres'}
-                onClick={() => history.push('/genres')}
+                onClick={() => history.push(appRoutes.genres)}
             >
                 <Icon name={'guitar'} iconPrefix={'fas'} />
                 <Link>Genres</Link>
@@ -85,17 +97,46 @@ const NavFC = ({ history, match }: NavProps) => {
                 <Icon name={'history'} iconPrefix={'fas'} />
                 <Link>Recent</Link>
             </LinkWrapper>
-            <LinkWrapper isActive={activePage === 'recent'}>
+            <LinkWrapper
+                isActive={activePage === 'favourites'}
+                onClick={() => history.push(appRoutes.favourites)}
+            >
                 <Icon name={'heart'} iconPrefix={'fas'} />
                 <Link>Favourites</Link>
             </LinkWrapper>
 
             <Category>Playlist</Category>
-            <LinkWrapper isActive={activePage === 'recent'}>
+            <LinkWrapper
+                isActive={activePage === 'recent'}
+                onClick={() => setShowModal(true)}
+            >
                 <Icon name={'plus-square'} iconPrefix={'fas'} />
                 <Link>Create new</Link>
             </LinkWrapper>
 
+            {
+                playlists && playlists.slice(0, 3).map((playlist) => {
+                    return (
+                        <LinkWrapper
+                            isActive={false}
+                            onClick={() => history.push(`/playlists/${playlist._id}`)}
+                        >
+                            <Icon name={'music'} iconPrefix={'fas'} />
+                            <Link>{playlist.name}</Link>
+                        </LinkWrapper>
+                    )
+                })
+            }
+            {
+                playlists.length > 3 &&
+                <LinkWrapper
+                    onClick={() => history.push('/playlists')}
+                    isActive={activePage === 'profile'}
+                >
+                    <Icon name={'eye'} iconPrefix={'fas'} />
+                    <Link>See all playlists</Link>
+                </LinkWrapper>
+            }
             <Category last>General</Category>
             <LinkWrapper onClick={() => history.push('/profile')} isActive={activePage === 'profile'}>
                 <Icon name={'id-card'} iconPrefix={'fas'} />
@@ -105,7 +146,11 @@ const NavFC = ({ history, match }: NavProps) => {
                 <Icon name={'sign-out-alt'} iconPrefix={'fas'} />
                 <Link>Logout</Link>
             </LinkWrapper>
-        </Wrapper>
+            <AddPlaylist
+                showModal={showModal}
+                onClose={() => setShowModal(false)}
+            />
+        </Wrapper >
     )
 }
 

@@ -45,6 +45,7 @@ export interface Song {
 export interface SongsState {
     songs: Song[]
     song: Song | {}
+    likedSongs: Song[]
     loading: boolean
     error: string
     pagination: PaginationElements
@@ -65,8 +66,15 @@ export interface GenresState {
     error: string
 }
 
+export interface Playlist {
+    name: string
+    _id: string
+}
+
 export interface PlaylistsState {
-    playlists: []
+    playlists: Playlist[]
+    playlist: Playlist
     loading: boolean
     error: string
+    songs: Song[]
 }

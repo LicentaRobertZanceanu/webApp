@@ -7,7 +7,8 @@ export const Button = ({
     onClick,
     text,
     fullWidth,
-    marginTopAuto
+    marginTopAuto,
+    style
 }
     : ButtonProps) => {
     return (
@@ -16,6 +17,7 @@ export const Button = ({
             onClick={onClick}
             fullWidth={fullWidth}
             marginTopAuto={marginTopAuto}
+            style={style}
         >
             <ButtonText>
                 {text}

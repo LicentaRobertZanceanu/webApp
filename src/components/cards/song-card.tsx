@@ -17,14 +17,17 @@ export interface LikeSongProps {
 }
 
 export interface CardProps {
+    deleteId?: string
     id: string
+    image: string | undefined
+    isSongsListing?: true
     title: string
     likeSong?: LikeSongProps
-    link: string
-    image: string | undefined
+    link?: string
+    onDelete?: () => void
     subTitle?: string
-    isSongsListing?: true
-
+    isPlaylistListing?: boolean
+    removeSongFromPlaylist?: () => void
 }
 
 const SongCard: FC<CardProps> = ({

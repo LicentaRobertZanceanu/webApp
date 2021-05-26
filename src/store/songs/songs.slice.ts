@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getSongs, getSongsByArtistId, songsReducer } from '.'
 import { IRootStore, SongsState } from '../../types'
-import { dislikeSong, getSongsByGenreId, likeSong } from './songs.reducer'
+import { dislikeSong, getFavouriteSongs, getSongsByGenreId, likeSong } from './songs.reducer'
 
 const initialState: SongsState = {
     loading: false,
     songs: [],
+    likedSongs: [],
     song: {},
     error: '',
     pagination: {
@@ -108,9 +109,14 @@ export const songsSlice = createSlice({
         },
         [likeSong.pending.type]: (state) => {
             state.loading = true
+
         },
-        [dislikeSong.fulfilled.type]: (state) => {
+        [dislikeSong.fulfilled.type]: (state, { payload }) => {
             state.loading = false
+            if (payload.isFromFavourites) {
+                const dislikedSongIndex = state.likedSongs.findIndex(song => song._id === payload.songId)
+                state.likedSongs.splice(dislikedSongIndex, 1)
+            }
         },
         [dislikeSong.rejected.type]: (state, { payload }) => {
             state.loading = false
@@ -118,6 +124,18 @@ export const songsSlice = createSlice({
         },
         [dislikeSong.pending.type]: (state) => {
             state.loading = true
+        },
+        [getFavouriteSongs.fulfilled.type]: (state, { payload }) => {
+            state.loading = false
+            state.likedSongs = payload
+        },
+        [getFavouriteSongs.pending.type]: (state) => {
+            state.loading = true
+            state.error = ''
+        },
+        [getFavouriteSongs.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload.message
         }
     }
 })

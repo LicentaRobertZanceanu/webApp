@@ -12,7 +12,6 @@ interface AppRouterFCProps extends RouteComponentProps { }
 
 const AppRouterFC = ({ history, match }: AppRouterFCProps) => {
     const { authData } = useSelector(authSelector)
-    console.log('gaghag', match, history)
     useEffect(() => {
         let redirectToHome = false
         if (!!authData.authToken) {

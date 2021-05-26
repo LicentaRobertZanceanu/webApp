@@ -120,9 +120,11 @@ export const likeSong = createAsyncThunk(
 export const dislikeSong = createAsyncThunk(
     'songs/dislikeSong',
     async ({
-        songId
+        songId,
+        isFromFavourites
     }: {
         songId: string
+        isFromFavourites?: boolean
     }) => {
         try {
             const response = await apiFetch({
@@ -131,6 +133,26 @@ export const dislikeSong = createAsyncThunk(
                 endpoint: `/likes/${songId}`
             })
 
+            return {
+                response,
+                isFromFavourites: !!isFromFavourites,
+                songId
+            }
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const getFavouriteSongs = createAsyncThunk(
+    'songs/getFavouritesSongs',
+    async () => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'get',
+                endpoint: '/likes'
+            })
             return response
         } catch (error) {
             return error
