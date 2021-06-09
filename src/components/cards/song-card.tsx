@@ -10,6 +10,7 @@ import {
     CardTitle,
     PlayButtonWrapper
 } from './styles'
+import { History } from 'history'
 
 export interface LikeSongProps {
     liked: boolean
@@ -28,6 +29,9 @@ export interface CardProps {
     subTitle?: string
     isPlaylistListing?: boolean
     removeSongFromPlaylist?: () => void
+    history?: History
+    hideLikeSong?: boolean
+    cardId?: string
 }
 
 const SongCard: FC<CardProps> = ({
@@ -35,10 +39,18 @@ const SongCard: FC<CardProps> = ({
     title,
     link,
     image,
-    subTitle
+    subTitle,
+    history
 }) => {
     return (
-        <CardContainer>
+        <CardContainer
+            pointer
+            onClick={() => {
+                if (history) {
+                    history.push(`/songs/${id}`)
+                }
+            }}
+        >
             <CardImageWrapper>
                 <CardImage src={image} />
                 <CardImageOverlay>

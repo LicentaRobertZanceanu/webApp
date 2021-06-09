@@ -44,7 +44,8 @@ export interface Song {
 
 export interface SongsState {
     songs: Song[]
-    song: Song | {}
+    recommendations: Song[]
+    song: Song
     likedSongs: Song[]
     loading: boolean
     error: string

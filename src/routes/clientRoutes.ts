@@ -1,7 +1,8 @@
 export const songsRoutes = {
     songs: '/songs',
     songsByArtists: '/songs/artists/:artistId',
-    songsByGenres: '/songs/genres/:genreId'
+    songsByGenres: '/songs/genres/:genreId',
+    viewSong: '/songs/:songId'
 }
 
 export const artistsRoutes = {
@@ -15,6 +16,7 @@ export const genresRoutes = {
 export const appRoutes = {
     home: '/',
     profile: '/profile',
+    recommendations: '/recommendations',
     favourites: '/favourites',
     playlists: '/playlists',
     songsFromPlaylist: '/playlists/:playlistId',

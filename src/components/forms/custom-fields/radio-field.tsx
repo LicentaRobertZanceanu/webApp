@@ -19,7 +19,6 @@ export const RadioField: FC<Props> = ({
     form,
     ...props
 }) => {
-    console.log('form', form)
     const isTouched = form.touched && !!form.touched[field.name]
     const hasValue = !!field.value
     const hasError = !isTouched && form.errors && !!form.errors[field.name]

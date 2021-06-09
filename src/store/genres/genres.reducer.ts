@@ -4,7 +4,7 @@ import { apiFetch } from "../../utils"
 export const genresReducer = {}
 
 export const getGenres = createAsyncThunk(
-    'genres/getGenres',
+    'genres/getGenres-Request',
     async () => {
         try {
             const response = await apiFetch({
@@ -20,7 +20,7 @@ export const getGenres = createAsyncThunk(
 )
 
 export const getGenreById = createAsyncThunk(
-    'genres/getGenreById',
+    'genres/getGenreById-Request',
     async ({
         genreId
     }: {

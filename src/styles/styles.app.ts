@@ -44,7 +44,10 @@ export const PageWrapper = styled.div`
     max-height:100vh;
     overflow-x:auto;
     padding:50px ${metrics.horizontalPadding} 30px ${metrics.horizontalPadding};
-
+    ${({ flex }: { flex?: boolean }) => flex && `
+        display:flex;
+        align-items:center;
+    `}
 `
 
 export const PageContentWrapper = styled.div`
@@ -120,7 +123,14 @@ export const FlexWrapper = styled.div`
     display:flex;
     align-items:center;
     width:100%;
-    ${({ marginBottom }: { marginBottom?: string }) => marginBottom && `
+    ${({ marginBottom, pointer }: { marginBottom?: string, pointer?: boolean }) => ` 
+    ${marginBottom ? `
         margin-bottom:${marginBottom};
+    `: ''}
+    ${pointer ? `
+        cursor:pointer;
+        width:auto;
+        ` :
+            ''}
     `}
 `

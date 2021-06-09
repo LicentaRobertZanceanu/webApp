@@ -28,13 +28,14 @@ const ListingCard: FC<CardProps> = ({
     subTitle,
     title,
     onDelete,
-    removeSongFromPlaylist
+    removeSongFromPlaylist,
+    hideLikeSong,
+    cardId
 }) => {
     const history = useHistory()
     const dispatch = useDispatch()
 
     const [showModal, setShowModal] = useState<boolean>(false)
-
     const renderListingForSongs = () => {
         let likeIconColor = colors.gray
         if (likeSong) {
@@ -80,19 +81,22 @@ const ListingCard: FC<CardProps> = ({
                     <CardSubtitle>{subTitle}</CardSubtitle>
                 </SongsListingTextWrapper>
                 <div style={{ marginLeft: 'auto' }}>
-                    <Icon
-                        iconPrefix={'fas'}
-                        name={'thumbs-up'}
-                        size={'sm'}
-                        color={likeIconColor}
-                        style={IconStyle}
-                        onClick={() => {
-                            if (likeSong) {
-                                const likeStatus = likeSong.onClick()
-                                likeSong.liked = likeStatus
-                            }
-                        }}
-                    />
+                    {
+                        !hideLikeSong &&
+                        <Icon
+                            iconPrefix={'fas'}
+                            name={'thumbs-up'}
+                            size={'sm'}
+                            color={likeIconColor}
+                            style={IconStyle}
+                            onClick={() => {
+                                if (likeSong) {
+                                    const likeStatus = likeSong.onClick()
+                                    likeSong.liked = likeStatus
+                                }
+                            }}
+                        />
+                    }
                     {renderSecondIcon()}
                     <Icon
                         iconPrefix={'fas'}
@@ -100,11 +104,16 @@ const ListingCard: FC<CardProps> = ({
                         size={'sm'}
                         color={colors.gray}
                         style={IconStyleWithMarginLeft}
+                        onClick={() => {
+                            history.push(`/songs/${id}`)
+                        }}
                     />
                 </div>
                 <AttributeSongToPlaylist
                     showModal={showModal}
-                    onClose={() => setShowModal(false)}
+                    onClose={() => {
+                        setShowModal(false)
+                    }}
                     songId={id}
                 />
             </SongsListingContainer>

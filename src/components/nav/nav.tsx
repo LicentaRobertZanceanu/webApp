@@ -12,7 +12,6 @@ interface NavProps extends RouteComponentProps { }
 
 const NavFC = ({ history, match }: NavProps) => {
     const { playlists } = useSelector(playlistsSelector)
-    console.log('playlists', playlists)
     const [showModal, setShowModal] = useState<boolean>(false)
     const dispatch = useDispatch()
 
@@ -45,6 +44,9 @@ const NavFC = ({ history, match }: NavProps) => {
             }
             case 'favourites': {
                 return 'favourites'
+            }
+            case 'recommendations': {
+                return 'recommendations'
             }
             default: {
                 return ''
@@ -93,9 +95,12 @@ const NavFC = ({ history, match }: NavProps) => {
             </LinkWrapper>
 
             <Category>Library</Category>
-            <LinkWrapper isActive={activePage === 'recent'}>
-                <Icon name={'history'} iconPrefix={'fas'} />
-                <Link>Recent</Link>
+            <LinkWrapper
+                isActive={activePage === 'recommendations'}
+                onClick={() => history.push(appRoutes.recommendations)}
+            >
+                <Icon name={'list-alt'} iconPrefix={'fas'} />
+                <Link>Recommendations</Link>
             </LinkWrapper>
             <LinkWrapper
                 isActive={activePage === 'favourites'}

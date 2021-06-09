@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useState } from 'react'
-import { useSelector, useDispatch } from "react-redux"
+import React, { FC, useState } from 'react'
 import { CardProps, Icon, InfiniteScrollCard } from '..'
-import { artistsSelector, getArtistById, getSongs, getSongsByArtistId, resetSongsToInitialState, songsSelector } from '../../store'
 import { PageContentWrapper, PageSubtitle, PageTitle, PageTopWrapper, PageWrapper } from '../../styles/styles.app'
 import { History } from 'history'
+import SearchComponent from '../search/search'
 
 interface Props {
     elements: CardProps[]
@@ -13,6 +12,8 @@ interface Props {
     hasMore: boolean
     history: History
     pageTitle?: string
+    showSearchComponent?: boolean
+    onSearchSongs?: (value: string) => void
 }
 
 const RenderSongs: FC<Props> = ({
@@ -22,8 +23,12 @@ const RenderSongs: FC<Props> = ({
     fetchData,
     hasMore,
     history,
-    pageTitle
+    pageTitle,
+    showSearchComponent,
+    onSearchSongs
 }) => {
+    const [showSearchInput, setShowSearchInput] = useState<boolean>(false)
+
     return (
         <PageWrapper>
             <PageContentWrapper>
@@ -48,6 +53,18 @@ const RenderSongs: FC<Props> = ({
                                 {filterName}
                             </PageSubtitle>
                         </>
+                    }
+                    {
+                        showSearchComponent &&
+                        <SearchComponent
+                            onSearch={(value) => {
+                                if (onSearchSongs) {
+                                    onSearchSongs(value)
+                                }
+                            }}
+                            inputIsShown={showSearchInput}
+                            handleInputShownState={() => setShowSearchInput(!showSearchInput)}
+                        />
                     }
                 </PageTopWrapper>
                 <InfiniteScrollCard

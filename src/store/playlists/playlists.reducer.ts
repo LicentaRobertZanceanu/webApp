@@ -8,7 +8,7 @@ export const playlistsReducer = {
 }
 
 export const createPlaylist = createAsyncThunk(
-    'playlists/createPlaylist',
+    'playlists/createPlaylist-Request',
     async ({
         values,
         callback
@@ -32,7 +32,7 @@ export const createPlaylist = createAsyncThunk(
 )
 
 export const getPlaylists = createAsyncThunk(
-    'playlists/getPlaylists',
+    'playlists/getPlaylists-Request',
     async () => {
         try {
             const response = await apiFetch({
@@ -48,7 +48,7 @@ export const getPlaylists = createAsyncThunk(
 )
 
 export const deletePlaylist = createAsyncThunk(
-    'playlists/deletePlaylist',
+    'playlists/deletePlaylist-Request',
     async ({
         playlistId,
         dispatch
@@ -71,7 +71,7 @@ export const deletePlaylist = createAsyncThunk(
 )
 
 export const deleteSongFromPlaylist = createAsyncThunk(
-    'playlists/deleteSongFromPlaylist',
+    'playlists/deleteSongFromPlaylist-Request',
     async ({
         playlistId,
         songId,
@@ -96,7 +96,7 @@ export const deleteSongFromPlaylist = createAsyncThunk(
 )
 
 export const addSongToPlaylist = createAsyncThunk(
-    'playlists/addSongToPlaylist',
+    'playlists/addSongToPlaylist-Request',
     async ({
         playlistId,
         songId,
@@ -121,7 +121,7 @@ export const addSongToPlaylist = createAsyncThunk(
 )
 
 export const getSongsFromPlaylist = createAsyncThunk(
-    'playlists/getSongsFromPlaylist',
+    'playlists/getSongsFromPlaylist-Request',
     async ({
         playlistId
     }: {
@@ -141,7 +141,7 @@ export const getSongsFromPlaylist = createAsyncThunk(
 )
 
 export const getPlaylistById = createAsyncThunk(
-    'playlists/getPlaylistById',
+    'playlists/getPlaylistById-Request',
     async ({
         playlistId
     }: {

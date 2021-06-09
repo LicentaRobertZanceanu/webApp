@@ -1,13 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getSongs, getSongsByArtistId, songsReducer } from '.'
-import { IRootStore, SongsState } from '../../types'
-import { dislikeSong, getFavouriteSongs, getSongsByGenreId, likeSong } from './songs.reducer'
+import { IRootStore, Song, SongsState } from '../../types'
+import { addListenedSong, dislikeSong, getFavouriteSongs, getRecommendedSongs, getSongById, getSongsByGenreId, likeSong } from './songs.reducer'
 
 const initialState: SongsState = {
     loading: false,
+    recommendations: [],
     songs: [],
     likedSongs: [],
-    song: {},
+    song: {
+        _id: '',
+        name: '',
+        lastFmId: '',
+        lastFmUrl: '',
+        youtubeUrl: '',
+        image: '',
+        artist: {
+            _id: '',
+            name: '',
+            lastFmId: '',
+        },
+        genre: {
+            _id: '',
+            name: '',
+            lastFmTag: ''
+        },
+        liked: false
+    },
     error: '',
     pagination: {
         page: 1,
@@ -127,7 +146,13 @@ export const songsSlice = createSlice({
         },
         [getFavouriteSongs.fulfilled.type]: (state, { payload }) => {
             state.loading = false
-            state.likedSongs = payload
+            state.likedSongs = payload.documents
+            state.pagination = {
+                page: payload.page,
+                total: payload.total,
+                pageSize: payload.pageSize,
+                numberOfPages: payload.numberOfPages
+            }
         },
         [getFavouriteSongs.pending.type]: (state) => {
             state.loading = true
@@ -136,7 +161,44 @@ export const songsSlice = createSlice({
         [getFavouriteSongs.rejected.type]: (state, { payload }) => {
             state.loading = false
             state.error = payload.message
-        }
+        },
+        [getSongById.fulfilled.type]: (state, { payload }) => {
+            state.loading = false
+            state.song = payload
+        },
+        [getSongById.pending.type]: (state) => {
+            state.loading = true
+            state.error = ''
+        },
+        [getSongById.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload.message
+        },
+        [addListenedSong.fulfilled.type]: (state) => {
+            state.loading = false
+        },
+        [addListenedSong.rejected.type]: (state) => {
+            state.loading = false
+        },
+        [addListenedSong.pending.type]: (state) => {
+            state.loading = false
+        },
+        [getRecommendedSongs.fulfilled.type]: (state, { payload }) => {
+            state.loading = false
+            const elements: Song[] = []
+            payload.map((el: string) => {
+                const newEl: Song = JSON.parse(el)
+                elements.push(newEl)
+            })
+            state.recommendations = elements
+        },
+        [getRecommendedSongs.rejected.type]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [getRecommendedSongs.pending.type]: (state) => {
+            state.loading = false
+        },
     }
 })
 
