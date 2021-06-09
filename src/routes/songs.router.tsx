@@ -6,6 +6,7 @@ import { PrivateRoute } from "../components"
 const SongsListing = lazy(() => import('../pages/songs/songs-listing'))
 const SongsByArtist = lazy(() => import('../pages/songs/songs-by-artists-listing'))
 const SongsByGenres = lazy(() => import('../pages/songs/songs-by-genres'))
+const ViewSong = lazy(() => import('../pages/songs/view-song'))
 
 const SongsRouter = () => {
     return (
@@ -18,6 +19,11 @@ const SongsRouter = () => {
             <PrivateRoute
                 component={SongsByGenres}
                 path={songsRoutes.songsByGenres}
+                exact={false}
+            />
+            <PrivateRoute
+                component={ViewSong}
+                path={songsRoutes.viewSong}
                 exact={false}
             />
             <PrivateRoute

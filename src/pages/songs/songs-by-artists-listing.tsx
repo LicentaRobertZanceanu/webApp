@@ -1,8 +1,9 @@
+import { debounce } from 'lodash'
 import React, { FC, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardProps, RenderSongs } from '../../components'
-import { artistsSelector, dislikeSong, getArtistById, getSongs, getSongsByArtistId, likeSong, resetSongsToInitialState, songsSelector } from '../../store'
+import { artistsSelector, dislikeSong, getArtistById, getSongsByArtistId, likeSong, resetSongsToInitialState, songsSelector } from '../../store'
 
 type MatchParams = {
     artistId: string
@@ -30,12 +31,13 @@ const SongsListing: FC<Props> = ({ match, history }) => {
                 artistId: match.params.artistId
             }
         }))
-    }, [])
+    }, [match.params.artistId])
     useEffect(() => {
         return () => {
             dispatch(resetSongsToInitialState({}))
         }
     }, [])
+
     useEffect(() => {
         const newSongs: CardProps[] = songs.map((song) => ({
             id: song._id,
@@ -74,6 +76,23 @@ const SongsListing: FC<Props> = ({ match, history }) => {
         }))
     }
 
+    const onSearchSongs = (value: string) => {
+        setSongsAsCardElements([])
+        const debouncer = debounce(() => {
+            dispatch(resetSongsToInitialState({}))
+            dispatch(getSongsByArtistId({
+                queryParams: {
+                    page: 1,
+                    limit: 20,
+                    searchBy: value,
+                    artistId: match.params.artistId
+                }
+            }))
+
+        }, 1000)
+        debouncer()
+    }
+
     return (
         <RenderSongs
             elements={songsAsCardElements}
@@ -82,6 +101,8 @@ const SongsListing: FC<Props> = ({ match, history }) => {
             fetchData={fetchSongs}
             hasMore={pagination.page < pagination.numberOfPages}
             history={history}
+            showSearchComponent={true}
+            onSearchSongs={onSearchSongs}
         />
     )
 }

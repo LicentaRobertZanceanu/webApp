@@ -13,14 +13,16 @@ interface Props {
 const AttributeSongToPlaylist: FC<Props> = ({
     onClose,
     showModal,
-    songId
+    songId,
 }) => {
     const dispatch = useDispatch()
     const { playlists } = useSelector(playlistsSelector)
 
     useEffect(() => {
-        dispatch(getPlaylists())
-    }, [])
+        if (showModal) {
+            dispatch(getPlaylists())
+        }
+    }, [showModal])
     return (
         <Popup
             showModal={showModal}

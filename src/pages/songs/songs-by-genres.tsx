@@ -3,6 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CardProps, RenderSongs } from '../../components'
 import { useSelector, useDispatch } from "react-redux"
 import { dislikeSong, genresSelector, getGenreById, getSongsByGenreId, likeSong, resetSongsToInitialState, songsSelector } from '../../store'
+import { debounce } from 'lodash'
 
 type MatchParams = {
     genreId: string
@@ -72,6 +73,23 @@ const SongsByGenres: FC<Props> = ({ match, history }) => {
         }))
     }
 
+    const onSearchSongs = (value: string) => {
+        setSongsAsCardElements([])
+        const debouncer = debounce(() => {
+            dispatch(resetSongsToInitialState({}))
+            dispatch(getSongsByGenreId({
+                queryParams: {
+                    page: 1,
+                    limit: 20,
+                    searchBy: value,
+                    genreId: match.params.genreId,
+                }
+            }))
+
+        }, 1000)
+        debouncer()
+    }
+
     return (
         <RenderSongs
             elements={songsAsCardElements}
@@ -80,6 +98,8 @@ const SongsByGenres: FC<Props> = ({ match, history }) => {
             fetchData={fetchSongs}
             hasMore={pagination.page < pagination.numberOfPages}
             history={history}
+            showSearchComponent={true}
+            onSearchSongs={onSearchSongs}
         />
     )
 }

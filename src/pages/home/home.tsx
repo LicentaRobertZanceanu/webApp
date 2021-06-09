@@ -1,5 +1,5 @@
 import React, { useEffect, FC } from "react"
-import { getSongs, getArtists, getGenres, songsSelector, artistsSelector, genresSelector, resetArtistsToInitialState, resetSongsToInitialState } from "../../store"
+import { getSongs, getArtists, getGenres, songsSelector, artistsSelector, genresSelector, resetArtistsToInitialState, resetSongsToInitialState, getRecommendedSongs } from "../../store"
 import { useSelector, useDispatch } from "react-redux"
 import { FlexWrapper, PageContentWrapper, PageSeeMore, PageTitle, PageTopWrapper, PageWrapper } from "../../styles/styles.app"
 import { CardsContainer, CardProps } from "../../components"
@@ -11,17 +11,11 @@ interface Props extends RouteComponentProps { }
 
 const HomePage: FC<Props> = ({ history }) => {
     const dispatch = useDispatch()
-    const { songs } = useSelector(songsSelector)
+    const { songs, recommendations } = useSelector(songsSelector)
     const { artists } = useSelector(artistsSelector)
     const { genres } = useSelector(genresSelector)
-
     useEffect(() => {
-        dispatch(getSongs({
-            queryParams: {
-                page: 1,
-                limit: 5
-            }
-        }))
+        dispatch(getRecommendedSongs())
         dispatch(getArtists({
             queryParams: {
                 page: 1,
@@ -38,12 +32,13 @@ const HomePage: FC<Props> = ({ history }) => {
         }
     }, [])
 
-    const songsAsCardElements: CardProps[] = songs && songs.map((song) => ({
+    const songsAsCardElements: CardProps[] = recommendations && recommendations.map((song) => ({
         id: song._id,
         title: song.name,
         link: '/',
         image: song.image,
-        subTitle: song.artist.name
+        subTitle: song.artist.name,
+        history
     }))
     const artistsAsCardElements: CardProps[] = artists.map((artist, index) => ({
         id: artist._id,
@@ -63,7 +58,7 @@ const HomePage: FC<Props> = ({ history }) => {
         <PageWrapper>
             <PageContentWrapper card>
                 <PageTopWrapper>
-                    <PageTitle>Songs</PageTitle>
+                    <PageTitle>Recommendations</PageTitle>
                     <PageSeeMore
                         onClick={() => history.push('/songs')}
                     >
@@ -71,7 +66,7 @@ const HomePage: FC<Props> = ({ history }) => {
                     </PageSeeMore>
                 </PageTopWrapper>
                 <CardsContainer
-                    elements={songsAsCardElements}
+                    elements={songsAsCardElements.slice(0, 5)}
                     type={'songs'}
                 />
 

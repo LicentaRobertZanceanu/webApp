@@ -18,10 +18,11 @@ export const artistsReducer = {
 type artistsQueryParams = {
     page: number
     limit: number
+    searchBy?: string
 }
 
 export const getArtists = createAsyncThunk(
-    'artists/getArtists',
+    'artists/getArtists-Request',
     async ({
         queryParams
     }: { queryParams: artistsQueryParams }) => {
@@ -41,7 +42,7 @@ export const getArtists = createAsyncThunk(
 )
 
 export const getArtistById = createAsyncThunk(
-    'artists/getArtistById',
+    'artists/getArtistById-Request',
     async ({
         artistId
     }: {

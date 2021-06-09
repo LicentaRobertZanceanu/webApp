@@ -20,6 +20,7 @@ export interface SongsQueryParams {
     limit: number
     genreId?: string
     artistId?: string
+    searchBy?: string
 }
 
 interface songsByArtistsIdQueryParams extends SongsQueryParams {
@@ -52,7 +53,7 @@ const getSongsApi = async ({
 }
 
 export const getSongs = createAsyncThunk(
-    'songs/getSongs',
+    'songs/getSongs-Request',
     async ({
         queryParams
     }: { queryParams: SongsQueryParams }
@@ -67,7 +68,7 @@ export const getSongs = createAsyncThunk(
 )
 
 export const getSongsByArtistId = createAsyncThunk(
-    'songs/getSongsByArtistId',
+    'songs/getSongsByArtistId-Request',
     async ({
         queryParams
     }: { queryParams: songsByArtistsIdQueryParams }
@@ -82,7 +83,7 @@ export const getSongsByArtistId = createAsyncThunk(
 )
 
 export const getSongsByGenreId = createAsyncThunk(
-    'songs/getSongsByGenreId',
+    'songs/getSongsByGenreId-Request',
     async ({
         queryParams
     }: { queryParams: SongsByGenreIdQueryParams }
@@ -97,7 +98,7 @@ export const getSongsByGenreId = createAsyncThunk(
 )
 
 export const likeSong = createAsyncThunk(
-    'songs/likeSong',
+    'songs/likeSong-Request',
     async ({
         songId
     }: {
@@ -118,7 +119,7 @@ export const likeSong = createAsyncThunk(
 )
 
 export const dislikeSong = createAsyncThunk(
-    'songs/dislikeSong',
+    'songs/dislikeSong-Request',
     async ({
         songId,
         isFromFavourites
@@ -145,13 +146,80 @@ export const dislikeSong = createAsyncThunk(
 )
 
 export const getFavouriteSongs = createAsyncThunk(
-    'songs/getFavouritesSongs',
-    async () => {
+    'songs/getFavouritesSongs-Request',
+    async (
+        {
+            queryParams
+        }:
+            {
+                queryParams: {
+                    page: number
+                    limit: number
+                }
+            }
+    ) => {
+        const query = queryString.stringify(queryParams)
         try {
             const response = await apiFetch({
                 api: 'music',
                 method: 'get',
-                endpoint: '/likes'
+                endpoint: `/likes?${query}`
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const getSongById = createAsyncThunk(
+    'songs/getSongById-Request',
+    async ({
+        songId
+    }: {
+        songId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'get',
+                endpoint: `/songs/${songId}`
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const addListenedSong = createAsyncThunk(
+    'songs/addListenedSong-Request',
+    async ({
+        songId
+    }: {
+        songId: string
+    }) => {
+        try {
+            const response = await apiFetch({
+                api: 'music',
+                method: 'post',
+                endpoint: `/listened/${songId}`
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
+)
+
+export const getRecommendedSongs = createAsyncThunk(
+    'songs/getRecommendedSongs-Request',
+    async () => {
+        try {
+            const response = await apiFetch({
+                api: 'recommendations',
+                method: 'get',
+                endpoint: '/recommendations'
             })
             return response
         } catch (error) {

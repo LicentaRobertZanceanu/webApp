@@ -37,6 +37,7 @@ export const CardContainer = styled.div`
     padding:10px;
     display:flex;
     flex-direction:column;
+    ${({ pointer }: { pointer?: boolean }) => pointer && `cursor:pointer;`}
 `
 export const CardImageWrapper = styled.div`
     width:100%;
@@ -85,6 +86,9 @@ export const CardTitle = styled.h1`
     font-weight:bold;
     color:${colors.primary};
     margin-bottom:5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     ${({ listing }: { listing?: boolean }) => listing && `
         margin-bottom:0;
         margin-top:0;

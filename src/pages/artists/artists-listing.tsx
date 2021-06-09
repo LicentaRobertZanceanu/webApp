@@ -7,13 +7,15 @@ import {
 } from '../../styles/styles.app'
 import { useSelector, useDispatch } from "react-redux"
 import { artistsSelector, getArtists, resetArtistsToInitialState } from '../../store'
-import { CardProps, InfiniteScrollCard } from '../../components'
+import { CardProps, InfiniteScrollCard, SearchComponent } from '../../components'
 import { getArtistIllustration } from '../../assets/images'
+import { debounce } from 'lodash'
 
 const ArtistsListing = () => {
     const dispatch = useDispatch()
     const { artists, pagination } = useSelector(artistsSelector)
     const [artistsAsCardElements, setArtistsAsCardElements] = useState<CardProps[]>([])
+    const [showSearchInput, setShowSearchInput] = useState<boolean>(false)
 
     useEffect(() => {
         dispatch(getArtists({
@@ -46,11 +48,32 @@ const ArtistsListing = () => {
         }))
     }
 
+    const onSearchSongs = (value: string) => {
+        setArtistsAsCardElements([])
+        const debouncer = debounce(() => {
+            dispatch(resetArtistsToInitialState({}))
+            dispatch(getArtists({
+                queryParams: {
+                    page: 1,
+                    limit: 20,
+                    searchBy: value
+                }
+            }))
+
+        }, 1000)
+        debouncer()
+    }
+
     return (
         <PageWrapper>
             <PageContentWrapper>
                 <PageTopWrapper>
                     <PageTitle>Artists</PageTitle>
+                    <SearchComponent
+                        onSearch={onSearchSongs}
+                        inputIsShown={showSearchInput}
+                        handleInputShownState={() => setShowSearchInput(!showSearchInput)}
+                    />
                 </PageTopWrapper>
                 <InfiniteScrollCard
                     elements={artistsAsCardElements}

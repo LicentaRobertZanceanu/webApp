@@ -63,7 +63,6 @@ const PlaylistSongsListing: FC<Props> = ({ history, match }) => {
 
         setSongsAsCardElements(newSongs)
     }, [songs])
-    console.log('play', playlist)
 
     return (
         <RenderSongs

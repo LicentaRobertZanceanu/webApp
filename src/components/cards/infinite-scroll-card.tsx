@@ -28,6 +28,7 @@ const InfiniteScrollCard: FC<Props> = ({ elements, hasMore, fetchData }) => {
                         return (
                             <ListingCard
                                 key={`card-infinite-scroll-element-${element.id}`}
+                                cardId={`listing-card-${element.id}`}
                                 {...element}
                             />
                         )

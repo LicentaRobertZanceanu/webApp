@@ -14,6 +14,7 @@ const ProfilePage = lazy(() => import('../pages/profile'))
 const FavouritesSongsPage = lazy(() => import('../pages/favourites/favourites'))
 const PlaylistsPage = lazy(() => import('../pages/playlists/playlists'))
 const PlaylistSongsListing = lazy(() => import('../pages/playlists/playlist-songs-listing'))
+const Recommendations = lazy(() => import('../pages/recommendations/recommendations'))
 
 export const PrivateRouter = () => {
     const dispatch = useDispatch()
@@ -58,6 +59,11 @@ export const PrivateRouter = () => {
                     <PrivateRoute
                         component={PlaylistsPage}
                         path={appRoutes.playlists}
+                        exact={true}
+                    />
+                    <PrivateRoute
+                        component={Recommendations}
+                        path={appRoutes.recommendations}
                         exact={true}
                     />
                     <PrivateRoute
