@@ -28,7 +28,6 @@ const SongsListing: FC<Props> = ({ history, match }) => {
             dispatch(resetSongsToInitialState({}))
         }
     }, [])
-
     useEffect(() => {
         const newSongs: CardProps[] = songs.map((song) => ({
             id: song._id,
@@ -44,12 +43,11 @@ const SongsListing: FC<Props> = ({ history, match }) => {
                             songId: song._id
                         }))
                         return false
-                    } else {
-                        dispatch(likeSong({
-                            songId: song._id
-                        }))
-                        return true
                     }
+                    dispatch(likeSong({
+                        songId: song._id
+                    }))
+                    return true
                 }
             }
         }))

@@ -6,6 +6,8 @@ import { SongsState } from "../../types"
 export const songsReducer = {
     resetSongsToInitialState: (state: SongsState, { payload }: PayloadAction<{}>) => {
         state.songs = []
+        state.recommendations = []
+        state.likedSongs = []
         state.pagination = {
             page: 1,
             total: 0,

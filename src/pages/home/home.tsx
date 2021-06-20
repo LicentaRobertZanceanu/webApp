@@ -23,9 +23,6 @@ const HomePage: FC<Props> = ({ history }) => {
             }
         }))
         dispatch(getGenres())
-    }, [])
-
-    useEffect(() => {
         return () => {
             dispatch(resetArtistsToInitialState({}))
             dispatch(resetSongsToInitialState({}))

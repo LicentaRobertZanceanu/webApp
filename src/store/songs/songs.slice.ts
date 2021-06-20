@@ -186,7 +186,7 @@ export const songsSlice = createSlice({
         [getRecommendedSongs.fulfilled.type]: (state, { payload }) => {
             state.loading = false
             const elements: Song[] = []
-            payload.map((el: string) => {
+            payload && payload.map((el: string) => {
                 const newEl: Song = JSON.parse(el)
                 elements.push(newEl)
             })
@@ -198,6 +198,7 @@ export const songsSlice = createSlice({
         },
         [getRecommendedSongs.pending.type]: (state) => {
             state.loading = false
+            state.recommendations = []
         },
     }
 })
