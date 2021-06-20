@@ -1,4 +1,4 @@
-import React, { FC, CSSProperties, useState } from 'react'
+import React, { FC, CSSProperties, useState, useEffect } from 'react'
 import { Icon } from '..'
 import { colors } from '../../constants/colors'
 import { CardProps } from './song-card'
@@ -35,11 +35,13 @@ const ListingCard: FC<CardProps> = ({
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const [isSongLiked, setIsSongLiked] = useState<boolean>(!!likeSong && likeSong.liked)
     const [showModal, setShowModal] = useState<boolean>(false)
+
     const renderListingForSongs = () => {
         let likeIconColor = colors.gray
         if (likeSong) {
-            if (likeSong.liked) {
+            if (isSongLiked) {
                 likeIconColor = colors.primary
             }
         }
@@ -92,7 +94,7 @@ const ListingCard: FC<CardProps> = ({
                             onClick={() => {
                                 if (likeSong) {
                                     const likeStatus = likeSong.onClick()
-                                    likeSong.liked = likeStatus
+                                    setIsSongLiked(likeStatus)
                                 }
                             }}
                         />

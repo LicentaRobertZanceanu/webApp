@@ -28,7 +28,13 @@ const PlaylistSongsListing: FC<Props> = ({ history, match }) => {
     }, [])
 
     useEffect(() => {
-        const newSongs: CardProps[] = songs.map((song) => ({
+        let newSongs: CardProps[]
+        if (!songs.length) {
+            newSongs = []
+            setSongsAsCardElements(newSongs)
+            return
+        }
+        newSongs = songs.map((song) => ({
             id: song._id,
             title: song.name,
             link: '/',
